@@ -13,6 +13,14 @@ function App() {
 	const [searchText, setSearchText] = useState('');
 	const [timesApiAccessed, setTimesApiAccessed] = useState(0);
 
+	const debounce = (fn: Function, ms = 300) => {
+		let timeoutId: ReturnType<typeof setTimeout>;
+		return function (this: any, ...args: any[]) {
+			clearTimeout(timeoutId);
+			timeoutId = setTimeout(() => fn.apply(this, args), ms);
+		};
+	};
+
 	const searchApi = () => {
 		const url = `https://edwardtanguay.vercel.app/share/techBooks.json`;
 		(async () => {
@@ -26,10 +34,12 @@ function App() {
 			setIsLoading(false);
 			setTimesApiAccessed(timesApiAccessed + 1);
 		})();
-	}
+	};
+
+	const debounceSearch = debounce(searchApi, 2000);
 
 	useEffect(() => {
-		searchApi();
+		debounceSearch();
 	}, [searchText]);
 
 	const handleSearchTextChange = (_searchText: string) => {
@@ -45,7 +55,10 @@ function App() {
 					value={searchText}
 					autoFocus
 					onChange={(e) => handleSearchTextChange(e.target.value)}
-				/> <span className="timesApiAccessed">times API was accessed: {timesApiAccessed}</span>
+				/>{' '}
+				<span className="timesApiAccessed">
+					times API was accessed: {timesApiAccessed}
+				</span>
 			</div>
 			<hr />
 
