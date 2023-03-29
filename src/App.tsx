@@ -19,7 +19,7 @@ function App() {
 			const data = (await axios.get(url)).data;
 			const _originalBooks = data;
 			const _books = _originalBooks.filter((m: IBook) =>
-				m.title.includes(searchText)
+				m.title.toLowerCase().includes(searchText.toLowerCase())
 			);
 			setBooks(_books);
 			setIsLoading(false);
