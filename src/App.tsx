@@ -12,6 +12,7 @@ function App() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
 	const [timesApiAccessed, setTimesApiAccessed] = useState(0);
+	const [initialDataLoaded, setInitialDataLoaded] = useState(false);
 
 	const debounce = (fn: Function, ms = 300) => {
 		let timeoutId: ReturnType<typeof setTimeout>;
@@ -32,14 +33,21 @@ function App() {
 			);
 			setBooks(_books);
 			setIsLoading(false);
-			setTimesApiAccessed(timesApiAccessed + 1);
+			if (initialDataLoaded) {
+				setTimesApiAccessed(timesApiAccessed + 1);
+			}
 		})();
 	};
 
 	const debounceSearch = debounce(searchApi, 1000);
 
 	useEffect(() => {
-		debounceSearch();
+		if (!initialDataLoaded) {
+			searchApi();
+		} else {
+			debounceSearch();
+		}
+		setInitialDataLoaded(true);
 	}, [searchText]);
 
 	const handleSearchTextChange = (_searchText: string) => {
