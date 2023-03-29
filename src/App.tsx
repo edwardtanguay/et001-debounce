@@ -11,9 +11,9 @@ function App() {
 	const [books, setBooks] = useState<IBook[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
-	const [timesSearched, setTimesSearched] = useState(0);
+	const [timesApiAccessed, setTimesApiAccessed] = useState(0);
 
-	useEffect(() => {
+	const searchApi = () => {
 		const url = `https://edwardtanguay.vercel.app/share/techBooks.json`;
 		(async () => {
 			setIsLoading(true);
@@ -24,8 +24,12 @@ function App() {
 			);
 			setBooks(_books);
 			setIsLoading(false);
-			setTimesSearched(timesSearched + 1);
+			setTimesApiAccessed(timesApiAccessed + 1);
 		})();
+	}
+
+	useEffect(() => {
+		searchApi();
 	}, [searchText]);
 
 	const handleSearchTextChange = (_searchText: string) => {
@@ -41,7 +45,7 @@ function App() {
 					value={searchText}
 					autoFocus
 					onChange={(e) => handleSearchTextChange(e.target.value)}
-				/> <span className="timesSearched">times searched: {timesSearched}</span>
+				/> <span className="timesApiAccessed">times API was accessed: {timesApiAccessed}</span>
 			</div>
 			<hr />
 
