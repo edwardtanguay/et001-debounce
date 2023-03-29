@@ -20,6 +20,7 @@ function App() {
 
 	return (
 		<div className="App">
+			<div className="supertitle">Debouncing Example</div>
 			<h1>Search Gutenberg Books</h1>
 			<div className="searchArea">
 				Search: <input />
