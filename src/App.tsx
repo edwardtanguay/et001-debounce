@@ -12,20 +12,22 @@ function App() {
 	const [isLoading, setIsLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
 
-	const searchBooksApi = (_searchText: string) => {
-		const url = `https://gutendex.com/books/?search=${_searchText}`;
+	useEffect(() => {
+		const url = `https://edwardtanguay.vercel.app/share/techBooks.json`;
 		(async () => {
 			setIsLoading(true);
 			const data = (await axios.get(url)).data;
-			const _books = data.results;
+			const _originalBooks = data;
+			const _books = _originalBooks.filter((m: IBook) =>
+				m.title.includes(searchText)
+			);
 			setBooks(_books);
 			setIsLoading(false);
 		})();
-	};
+	}, [searchText]);
 
 	const handleSearchTextChange = (_searchText: string) => {
 		setSearchText(_searchText);
-		searchBooksApi(_searchText);
 	};
 	return (
 		<div className="App">
@@ -34,6 +36,7 @@ function App() {
 			<div className="searchArea">
 				Search:{' '}
 				<input
+					value={searchText}
 					autoFocus
 					onChange={(e) => handleSearchTextChange(e.target.value)}
 				/>
