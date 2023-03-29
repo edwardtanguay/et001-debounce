@@ -36,7 +36,7 @@ function App() {
 		})();
 	};
 
-	const debounceSearch = debounce(searchApi, 2000);
+	const debounceSearch = debounce(searchApi, 1000);
 
 	useEffect(() => {
 		debounceSearch();
