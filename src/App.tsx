@@ -11,6 +11,7 @@ function App() {
 	const [books, setBooks] = useState<IBook[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
+	const [timesSearched, setTimesSearched] = useState(0);
 
 	useEffect(() => {
 		const url = `https://edwardtanguay.vercel.app/share/techBooks.json`;
@@ -23,6 +24,7 @@ function App() {
 			);
 			setBooks(_books);
 			setIsLoading(false);
+			setTimesSearched(timesSearched + 1);
 		})();
 	}, [searchText]);
 
@@ -39,7 +41,7 @@ function App() {
 					value={searchText}
 					autoFocus
 					onChange={(e) => handleSearchTextChange(e.target.value)}
-				/>
+				/> <span className="timesSearched">times searched: {timesSearched}</span>
 			</div>
 			<hr />
 
