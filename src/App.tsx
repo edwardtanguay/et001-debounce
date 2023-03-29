@@ -67,7 +67,8 @@ function App() {
 					onChange={(e) => handleSearchTextChange(e.target.value)}
 				/>{' '}
 				<div className="timesApiAccessed">
-					Times API was accessed: {timesApiAccessed}
+					<div>Number of seconds to wait before accessing API: {secondsToWait}</div>
+					<div>Times API was accessed: {timesApiAccessed}</div>
 				</div>
 			</div>
 			<hr />
