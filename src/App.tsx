@@ -34,7 +34,7 @@ function App() {
 			setBooks(_books);
 			setIsLoading(false);
 			if (initialDataLoaded) {
-			setTimesApiAccessed(timesApiAccessed + 1);
+				setTimesApiAccessed(timesApiAccessed + 1);
 			}
 		})();
 	};
@@ -70,18 +70,12 @@ function App() {
 			</div>
 			<hr />
 
-			{isLoading ? (
-				<p>loading...</p>
-			) : (
-				<>
-					<h2>There are {books.length} books</h2>
-					<ul>
-						{books.map((book: IBook) => {
-							return <li key={book.id}>{book.title}</li>;
-						})}
-					</ul>
-				</>
-			)}
+			<h2>There are {books.length} books</h2>
+			<ul>
+				{books.map((book: IBook) => {
+					return <li key={book.id}>{book.title}</li>;
+				})}
+			</ul>
 		</div>
 	);
 }
