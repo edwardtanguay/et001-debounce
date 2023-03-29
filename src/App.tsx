@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import './App.scss';
 import axios from 'axios';
 
+const secondsToWait = 2;
+
 interface IBook {
 	id: number;
 	title: string;
@@ -39,7 +41,7 @@ function App() {
 		})();
 	};
 
-	const debounceSearch = debounce(searchApi, 1000);
+	const debounceSearch = debounce(searchApi, secondsToWait * 1000);
 
 	useEffect(() => {
 		if (!initialDataLoaded) {
@@ -64,9 +66,9 @@ function App() {
 					autoFocus
 					onChange={(e) => handleSearchTextChange(e.target.value)}
 				/>{' '}
-				<span className="timesApiAccessed">
-					times API was accessed: {timesApiAccessed}
-				</span>
+				<div className="timesApiAccessed">
+					Times API was accessed: {timesApiAccessed}
+				</div>
 			</div>
 			<hr />
 
