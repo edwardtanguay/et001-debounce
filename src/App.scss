@@ -4,6 +4,10 @@ body {
 	padding: 1rem 1rem;
 	font-family: sans-serif;
 
+	h1 {
+		color: rgb(206, 161, 79);
+	}
+
 	.searchArea {
 		margin-bottom: 1rem;
 	}
@@ -12,6 +16,13 @@ body {
 		margin-bottom: -1rem;
 		font-size: .9rem;
 		color: rgb(221, 221, 180);
+	}
+
+	.numberOfSeconds {
+		color: rgb(90, 98, 163);
+		font-size: 1.3rem;
+		font-style: italic;
+		margin-top: 1rem;
 	}
 
 	.timesApiAccessed {

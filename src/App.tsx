@@ -50,8 +50,8 @@ function App() {
 			searchApi();
 		} else {
 			if (!isWaiting) {
-			setIsWaiting(true);
-			debounceSearch();
+				setIsWaiting(true);
+				debounceSearch();
 			}
 		}
 		setInitialDataLoaded(true);
@@ -62,7 +62,7 @@ function App() {
 	};
 	return (
 		<div className="App">
-			<div className="supertitle">Debouncing Example</div>
+			<div className="supertitle">Debounce Example</div>
 			<h1>Search Gutenberg Books</h1>
 			<div className="searchArea">
 				Search:{' '}
@@ -71,12 +71,12 @@ function App() {
 					autoFocus
 					onChange={(e) => handleSearchTextChange(e.target.value)}
 				/>{' '}
+				<div className="numberOfSeconds">
+					Number of seconds to wait before accessing API:{' '}
+					{secondsToWait}
+				</div>
 				<div className="timesApiAccessed">
-					<div>
-						Number of seconds to wait before accessing API:{' '}
-						{secondsToWait}
-					</div>
-					<div>Times API was accessed: {timesApiAccessed}</div>
+					Times API was accessed: {timesApiAccessed}
 				</div>
 			</div>
 			<hr />
