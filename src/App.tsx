@@ -11,32 +11,34 @@ interface IBook {
 
 function App() {
 	const [books, setBooks] = useState<IBook[]>([]);
-	const [isLoading, setIsLoading] = useState(false);
 	const [searchText, setSearchText] = useState('');
 	const [timesApiAccessed, setTimesApiAccessed] = useState(0);
 	const [initialDataLoaded, setInitialDataLoaded] = useState(false);
+	const [isWaiting, setIsWaiting] = useState(false);
 
 	const debounce = (fn: Function, ms = 300) => {
 		let timeoutId: ReturnType<typeof setTimeout>;
 		return function (this: any, ...args: any[]) {
 			clearTimeout(timeoutId);
-			timeoutId = setTimeout(() => fn.apply(this, args), ms);
+			timeoutId = setTimeout(() => {
+				setIsWaiting(false);
+				fn.apply(this, args);
+			}, ms);
 		};
 	};
 
 	const searchApi = () => {
 		const url = `https://edwardtanguay.vercel.app/share/techBooks.json`;
 		(async () => {
-			setIsLoading(true);
 			const data = (await axios.get(url)).data;
 			const _originalBooks = data;
 			const _books = _originalBooks.filter((m: IBook) =>
 				m.title.toLowerCase().includes(searchText.toLowerCase())
 			);
 			setBooks(_books);
-			setIsLoading(false);
 			if (initialDataLoaded) {
 				setTimesApiAccessed(timesApiAccessed + 1);
+				console.log('here');
 			}
 		})();
 	};
@@ -47,7 +49,10 @@ function App() {
 		if (!initialDataLoaded) {
 			searchApi();
 		} else {
+			if (!isWaiting) {
+			setIsWaiting(true);
 			debounceSearch();
+			}
 		}
 		setInitialDataLoaded(true);
 	}, [searchText]);
@@ -67,7 +72,10 @@ function App() {
 					onChange={(e) => handleSearchTextChange(e.target.value)}
 				/>{' '}
 				<div className="timesApiAccessed">
-					<div>Number of seconds to wait before accessing API: {secondsToWait}</div>
+					<div>
+						Number of seconds to wait before accessing API:{' '}
+						{secondsToWait}
+					</div>
 					<div>Times API was accessed: {timesApiAccessed}</div>
 				</div>
 			</div>
